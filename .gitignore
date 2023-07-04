@@ -1,0 +1,5 @@
+.ssh_script
+.git_script
+auctions/__pycache__/
+auctions/migrations/__pycache__
+auctions/commerce/__pycache__
