@@ -65,3 +65,5 @@ def register(request):
 def create_listingv(request):
     if request.method == "GET":
         return render(request, "auctions/create_listing.html")
+    if request.method == "POST":
+        return HttpResponse(f"This is the info sending to the db {request.POST['description']}")

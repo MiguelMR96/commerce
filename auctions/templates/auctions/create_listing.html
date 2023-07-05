@@ -5,21 +5,17 @@
 
     <form action="{% url 'auction:create_listing' %}" method="POST">
         {% csrf_token %}
-        <!-- <div>
-            <label for="listing-img" class="btn btn-secondary">Select Image</label>
-            <input id="listing-img" style="visibility:hidden;" type="file" name="listing-img" accept="image/png, image/gif, image/jpeg">
-        </div> -->
-
         <div>
-            <label for="listing-img">Select the listing picture (Only .jpeg, .png files are valid)</label>
             <input type="file" id="listing-img" name="listing-img" accept="image/png, image/gif, image/jpeg">
+            <br />
+            <label for="listing-img" style="font-size: 80%">Select the listing picture (Only .jpeg, .png files are valid)</label>            
         </div>
 
         <div>
             <input type="text" name="title" placeholder="Title" required>
         </div>
         <br />
-        <textarea id="new-listing" name="new-listing" required></textarea>
+        <textarea id="content" name="description" required></textarea>
         <input type="submit" name="save" value="Save New Page" class="btn btn-primary">
     </form>
 
