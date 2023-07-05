@@ -21,3 +21,8 @@ class Bid(models.Model):
     listing_id = models.ForeignKey(Listing, on_delete=models.PROTECT)
     bid = models.IntegerField(null=False)
     date = models.DateField()
+
+class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    bid_id = models.ForeignKey(Bid, on_delete=models.PROTECT)
+    listing_id = models.ForeignKey(Listing, on_delete=models.PROTECT)
