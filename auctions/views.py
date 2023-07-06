@@ -67,13 +67,12 @@ def create_listingv(request):
     if request.method == "GET":
         return render(request, "auctions/create_listing.html")
     if request.method == "POST":
-        picture = request.POST['listing-img']
         title = request.POST['title']
-
+        picture = request.POST['img-url']
         description_obj = {"description": request.POST['description']}
         description_json = json.dumps(description_obj)
         now = datetime.now()
-        listing = Listing(name=title, description=description_json, date=now)
+        listing = Listing(name=title, description=description_json, date=now, picture=picture)
 
         listing.save()
-        return HttpResponse(f"This is the info sending to the db {picture}")
+        return HttpResponse("Here to debug")
