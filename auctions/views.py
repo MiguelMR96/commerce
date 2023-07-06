@@ -4,8 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
-
+from .models import User, Listing
+import json
+from datetime import datetime
 
 def index(request):
     return render(request, "auctions/index.html")
@@ -61,3 +62,18 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def create_listingv(request):
+    if request.method == "GET":
+        return render(request, "auctions/create_listing.html")
+    if request.method == "POST":
+        picture = request.POST['listing-img']
+        title = request.POST['title']
+
+        description_obj = {"description": request.POST['description']}
+        description_json = json.dumps(description_obj)
+        now = datetime.now()
+        listing = Listing(name=title, description=description_json, date=now)
+
+        listing.save()
+        return HttpResponse(f"This is the info sending to the db {picture}")

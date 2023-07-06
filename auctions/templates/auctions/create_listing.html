@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Create Listing</h2>
+
+    <form action="{% url 'create_listing' %}" method="POST">
+        {% csrf_token %}
+        <!-- <div>
+            <input type="file" id="listing-img" name="listing-img" accept="image/png, image/gif, image/jpeg">
+            <br />
+            <label for="listing-img" style="font-size: 80%">Select the listing picture (Only .jpeg, .png files are valid)</label>            
+        </div> -->
+
+        <div>
+            <input type="text" name="title" placeholder="Title" required>
+        </div>
+        <br />
+        <textarea id="content" name="description" required></textarea>
+        <input type="submit" name="save" value="Save New Page" class="btn btn-primary">
+    </form>
+
+{% endblock %}
