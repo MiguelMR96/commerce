@@ -72,7 +72,7 @@ def create_listingv(request):
         description_obj = {"description": request.POST['description']}
         description_json = json.dumps(description_obj)
         now = datetime.now()
-        listing = Listing(name=title, description=description_json, date=now, picture=picture)
+        listing = Listing(title=title, description=description_json, date=now, picture=picture)
 
         listing.save()
         return HttpResponse("Here to debug")

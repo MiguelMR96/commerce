@@ -10,19 +10,17 @@ class User(AbstractUser):
 
 class Listing(models.Model):
     id = models.AutoField(primary_key=True)
-    picture = models.CharField(max_length=256)
-    name = models.CharField(max_length=64)
+    title = models.CharField(max_length=64)
+    image = models.CharField(max_length=256)
     description = models.JSONField()
     date = models.DateField()
     owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="owner")
 
     def __str__(self):
-        return f"{self.name} - {self.id}: {self.description} at {self.date}"
+        return f"{self.title} - {self.id}: {self.description} at {self.date}"
 
 class Bid(models.Model):
     id = models.AutoField(primary_key=True)
-    # user_id = models.ForeignKey(User, on_delete=models.PROTECT, related_name="user_bid")
-    # listing_id = models.ForeignKey(Listing, on_delete=models.PROTECT, related_name="listing_bid")
     bid = models.IntegerField(null=False)
     listing = models.ForeignKey(Listing, on_delete=models.PROTECT, related_name="item")
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="bidder")
