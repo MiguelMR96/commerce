@@ -8,6 +8,9 @@ class User(AbstractUser):
     email = models.CharField(max_length=64, unique=True)
     password = models.CharField(max_length=48)
 
+    def __str__(self):
+        return f"{self.username} - {self.id}: {self.name} at {self.email}"
+
 class Listing(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=64)
@@ -17,7 +20,7 @@ class Listing(models.Model):
     owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="owner")
 
     def __str__(self):
-        return f"{self.title} - {self.id}: {self.description} at {self.date}"
+        return f"{self.title} - {self.id}: {self.description} at {self.date} of {self.owner}"
 
 class Bid(models.Model):
     id = models.AutoField(primary_key=True)
@@ -26,8 +29,14 @@ class Bid(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="bidder")
     date = models.DateField()
 
+    def __str__(self):
+        return f"{self.id} bid: {self.listing} at {self.bid}"
+
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
     listing = models.ForeignKey(Listing, on_delete=models.PROTECT, related_name="review_object")
     username = models.ForeignKey(User, on_delete=models.PROTECT, related_name="reviewer")
     review = models.CharField(max_length=512)
+
+    def __str__(self):
+        return f"{self.id} comment: {self.review} at {self.listing}"
