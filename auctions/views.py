@@ -72,8 +72,8 @@ def create_listingv(request):
         description_obj = {"description": request.POST['description']}
         description_json = json.dumps(description_obj)
         now = datetime.now()
-        owner = request.user.username
-        listing = Listing(title=title, description=description_json, date=now, image=picture, owner=owner)
+        owner = User.objects.get(username=request.user.username)
 
+        listing = Listing(title=title, description=description_json, date=now, image=picture, owner=owner)
         listing.save()
-        return HttpResponse(f"Here to debug {request.user.username}")
+        return HttpResponseRedirect(reverse("auctions:index"))
