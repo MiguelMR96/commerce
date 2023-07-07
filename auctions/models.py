@@ -16,7 +16,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     image = models.CharField(max_length=256)
     description = models.JSONField()
-    date = models.DateField()
+    date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="owner")
 
     def __str__(self):
@@ -27,7 +27,7 @@ class Bid(models.Model):
     bid = models.IntegerField(null=False)
     listing = models.ForeignKey(Listing, on_delete=models.PROTECT, related_name="item")
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="bidder")
-    date = models.DateField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.id} bid: {self.listing} at {self.bid}"
