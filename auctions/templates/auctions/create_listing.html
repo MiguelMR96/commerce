@@ -11,16 +11,16 @@
             <label for="listing-img" style="font-size: 80%">Select the listing picture (Only .jpeg, .png files are valid)</label>            
         </div> -->
 
-        <div>
-            <input type="text" name="title" placeholder="Title" required>
+        <div class="form-group">
+            <input class="form-control" type="text" name="title" placeholder="Title" required>
         </div>
         <br />
-        <div>
-            <input type="text" name="img-url" placeholder="Image's URL">
+        <div class="form-group">
+            <input class="form-control" type="text" name="img-url" placeholder="Image's URL">
         </div>
         <br />
-        <textarea id="content" name="description" required></textarea>
-        <input type="submit" name="save" value="Save New Page" class="btn btn-primary">
+        <textarea class="form-control" id="content" name="description" required></textarea>
+        <input type="submit" name="save" value="Save new listing" class="btn btn-primary m-3">
     </form>
 
 {% endblock %}
