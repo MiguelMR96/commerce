@@ -57,6 +57,7 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
             user.first_name = first_name
+            user.last_name = last_name
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {

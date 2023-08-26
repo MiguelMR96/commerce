@@ -9,7 +9,7 @@ class User(AbstractUser):
     # password = models.CharField(max_length=48)
 
     def __str__(self):
-        return f"{self.username} - {self.id}: {self.name} at {self.email}"
+        return f"{self.id} {self.get_username()}"
 
 class Category(models.Model):
     name = models.CharField(max_length=64, default="Default category", primary_key=True)
