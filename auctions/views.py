@@ -4,12 +4,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Bid
 import json
 from datetime import datetime
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listings": Listing.objects.all()
+    })
 
 
 def login_view(request):
@@ -71,14 +73,45 @@ def register(request):
 def create_listingv(request):
     if request.method == "GET":
         return render(request, "auctions/create_listing.html")
-    if request.method == "POST":
-        title = request.POST['title']
-        picture = request.POST['img-url']
-        description_obj = {"description": request.POST['description']}
-        description_json = json.dumps(description_obj)
-        now = datetime.now()
-        owner = User.objects.get(username=request.user.username)
+    elif request.method == "POST":
+        title = request.POST.get('title')
+        picture = request.POST.get('img-url')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        print(f"price {price}")
 
-        listing = Listing(title=title, description=description_json, date=now, image=picture, owner=owner)
+        # Check if the required fields are provided
+        if not title or not description:
+            return render(request, "auctions/create_listing.html", {
+                "error": "Title and description are required."
+            })
+
+        # Get the current user
+        try:
+            owner = User.objects.get(username=request.user.username)
+        except User.DoesNotExist:
+            return render(request, "auctions/create_listing.html", {
+                "error": "User not found."
+            })
+
+        # Create the listing object
+        listing = Listing(
+            title=title,
+            description={"description": description},  # Directly use the dictionary
+            image_url=picture,
+            owner=owner,
+            # price=price
+        )
+        listing.save()
+
+        # Create Bid for price of listing
+        bid = Bid(
+            bid=price,
+            user=owner,
+            listing=listing
+        )
+
+        bid.save()
+        listing.price = bid
         listing.save()
         return HttpResponseRedirect(reverse("auctions:index"))
